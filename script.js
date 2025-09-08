@@ -1,13 +1,20 @@
-const burger = document.getElementById('burger');
-const navElement = document.getElementById('nav');
-const nav = navElement ? navElement.querySelector('ul') : null;
+$(function() {
+  const header = $('.header_top');
+  const about = $('#about');
 
-if (burger && nav) {
-  burger.addEventListener('click', () => {
-    nav.classList.toggle('show');
-  });
+  function checkScroll() {
+    const scrollPos = $(window).scrollTop();
+    const aboutBottom = about.offset().top + about.outerHeight();
 
-  window.addEventListener('scroll', () => {
-    nav.classList.remove('show');
-  });
-}
+    if (scrollPos === 0) {
+      header.removeClass('hidden');
+    } else if (scrollPos < aboutBottom) {
+      header.addClass('hidden');
+    } else {
+      header.removeClass('hidden');
+    }
+  }
+
+  $(window).on('scroll resize', checkScroll);
+  checkScroll();
+});
